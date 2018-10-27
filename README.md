@@ -1,4 +1,4 @@
-# todo
+# todo-vue
 
 ## Project setup
 ```
@@ -24,4 +24,3 @@ yarn run test
 ```
 yarn run lint
 ```
-# todo-vue
