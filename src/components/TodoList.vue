@@ -1,13 +1,50 @@
 <template>
     <div class="list-wrapper">
-        <h2>{{ title }}</h2>
-        <input v-model="newTask" placeholder="task">
-        <button class="add" @click="add">add</button>
+        <h1>{{ title }}</h1>
+
+        <el-form
+          :inline="true"
+          :model="formInline"
+          class="demo-form-inline"
+        >
+          <el-form-item label="task by">
+            <el-input
+              v-model="newTask"
+              placeholder="here"
+            >
+            </el-input>
+          </el-form-item>
+
+            <el-form-item>
+            <el-button
+            style="display: inline"
+            class="add"
+            @click="add"
+            size="small"
+            type="danger"
+            round>
+              add
+            </el-button>
+            </el-form-item>
+
+        </el-form>
+
         <div class="drag">
         <draggable :list="list" class="dragArea">
           <div v-for="(item, index) in list" v-bind:key="item.id">
             {{ item.task }}
-            <button class="remove" @click="remove(index)">remove</button>
+            
+            <el-row>
+              <el-button
+                class="remove"
+                @click="remove(index)"
+                size="mini"
+                type="info"
+                icon="el-icon-delete"
+                circle>
+              </el-button>
+            </el-row>
+
           </div>
         </draggable>
         </div>
@@ -16,10 +53,13 @@
 
 <script>
 import draggable from "vuedraggable";
-
+import { Button, Form, FormItem } from "element-ui";
 export default {
   components: {
-    draggable
+    draggable,
+    Button,
+    Form,
+    FormItem
   },
   name: "TodoList",
   props: {
@@ -27,6 +67,9 @@ export default {
   },
   data() {
     return {
+      formInline: {
+        user: ""
+      },
       newTask: "",
       list: [
         { id: 1, task: "hoge" },
@@ -39,7 +82,6 @@ export default {
   methods: {
     add: function() {
       if (this.newTask === "") return alert("値を入力してください");
-
       let newList = [
         ...this.list,
         { id: this.list.length + 1, task: this.newTask }
@@ -49,7 +91,6 @@ export default {
     remove: function(index) {
       let newList = [...this.list];
       newList.splice(index, 1);
-
       this.list = newList;
     }
   }
