@@ -22,23 +22,24 @@ export default {
   data() {
     return {
       newTask: "",
-      list: [
-        { id: 1, task: "買う" },
-        { id: 2, task: "売る" },
-        { id: 3, task: "捨てる" }
-      ]
+      list: []
     };
   },
   methods: {
     add: function() {
       if (this.newTask === "") return alert("値を入力してください");
 
-      const max = this.list.reduce((a, b) => (a.id > b.id ? a.id : b.id));
-      this.list.push({ id: max + 1, task: this.newTask });
-      console.log(this.newTask);
+      let newList = [
+        ...this.list,
+        { id: this.list.length + 1, task: this.newTask }
+      ];
+      this.list = newList;
     },
     remove: function(index) {
-      this.list.splice(index, 1);
+      let newList = [...this.list];
+      newList.splice(index, 1);
+
+      this.list = newList;
     }
   }
 };
