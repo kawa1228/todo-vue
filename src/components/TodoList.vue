@@ -53,13 +53,9 @@
 
 <script>
 import draggable from "vuedraggable";
-import { Button, Form, FormItem } from "element-ui";
 export default {
   components: {
-    draggable,
-    Button,
-    Form,
-    FormItem
+    draggable
   },
   name: "TodoList",
   props: {
