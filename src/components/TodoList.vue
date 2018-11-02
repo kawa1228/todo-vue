@@ -31,9 +31,18 @@
         <div class="drag">
         <draggable :list="list" class="dragArea">
           <div class="items" v-for="(item, index) in list" v-bind:key="item.id" style>
+            <div class="item-name">
             {{ item.task }}
+            </div>
 
             <el-row class="el-row">
+              <el-button
+                type="text"
+                plain=plain
+                size="mini"
+                icon="el-icon-edit"
+                circle></el-button>
+
               <el-button
                 class="remove"
                 @click="remove(index)"
@@ -43,6 +52,13 @@
                 icon="el-icon-delete"
                 circle>
               </el-button>
+               
+              <el-button
+                type="text"
+                plain=plain
+                size="mini"
+                icon="el-icon-star-off"
+                circle></el-button>
             </el-row>
 
           </div>
@@ -101,6 +117,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="sass">
+h1
+  letter-spacing: 7px;
 h3
   margin: 40px 0 0;
 ul
@@ -114,8 +132,8 @@ a
   display: inline-block
 .items
   width: 80%
-  margin: 1px
-  padding: 6px
+  margin: 5px
+  padding: 4px
   border: solid 1px #dcdfe6
   border-radius: 4px
   display: inline-block
@@ -123,6 +141,9 @@ a
 .items:hover
   border: solid 1px #409EFF
   transition: border 0.5s
-.el-button
-  margin: 0px 20px
+.item-name
+  display: inline-block
+  padding: 10px 40px
+  font-weight: 500;
+  letter-spacing: 2px;
 </style>
