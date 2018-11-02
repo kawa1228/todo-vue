@@ -4,7 +4,6 @@
 
         <el-form
           :inline="true"
-          :model="formInline"
           class="demo-form-inline"
         >
           <el-form-item label="task by">
@@ -31,15 +30,16 @@
 
         <div class="drag">
         <draggable :list="list" class="dragArea">
-          <div v-for="(item, index) in list" v-bind:key="item.id">
+          <div class="items" v-for="(item, index) in list" v-bind:key="item.id" style>
             {{ item.task }}
-            
-            <el-row>
+
+            <el-row class="el-row">
               <el-button
                 class="remove"
                 @click="remove(index)"
                 size="mini"
-                type="info"
+                type="text"
+                plain=plain
                 icon="el-icon-delete"
                 circle>
               </el-button>
@@ -59,20 +59,26 @@ export default {
   },
   name: "TodoList",
   props: {
-    title: String
+    title: String,
+    plain: true
   },
   data() {
     return {
-      formInline: {
-        user: ""
-      },
-      newTask: "",
       list: [
-        { id: 1, task: "hoge" },
-        { id: 2, task: "fuga" },
-        { id: 3, task: "foo" },
-        { id: 4, task: "piyo" }
-      ]
+        {
+          id: 1,
+          task: "HOGE"
+        },
+        {
+          id: 2,
+          task: "fuga"
+        },
+        {
+          id: 3,
+          task: "foo"
+        }
+      ],
+      newTask: ""
     };
   },
   methods: {
@@ -104,4 +110,19 @@ li
   margin: 0 10px
 a
   color: #42b983
+.el-row
+  display: inline-block
+.items
+  width: 80%
+  margin: 1px
+  padding: 6px
+  border: solid 1px #dcdfe6
+  border-radius: 4px
+  display: inline-block
+  cursor: pointer
+.items:hover
+  border: solid 1px #409EFF
+  transition: border 0.5s
+.el-button
+  margin: 0px 20px
 </style>
