@@ -2,6 +2,8 @@
     <div class="list-wrapper">
         <h1>{{ title }}</h1>
 
+        <img src="../image/img01.jpg" style="width: 80%">
+
         <el-form
           :inline="true"
           class="demo-form-inline"
@@ -9,6 +11,7 @@
           <el-form-item label="task by">
             <el-input
               v-model="newTask"
+              @keyup.13="add"
               placeholder="here"
             >
             </el-input>
@@ -64,11 +67,15 @@
           </div>
         </draggable>
         </div>
+      <el-button plain class="top" @click="scrollTop" icon="el-icon-arrow-up">Top</el-button>
+      
     </div>
 </template>
 
 <script>
 import draggable from "vuedraggable";
+import smoothScroll from "smooth-scroll";
+
 export default {
   components: {
     draggable
@@ -110,6 +117,10 @@ export default {
       let newList = [...this.list];
       newList.splice(index, 1);
       this.list = newList;
+    },
+    scrollTop: function() {
+      const scroll = new smoothScroll();
+      scroll.animateScroll(0);
     }
   }
 };
@@ -119,6 +130,8 @@ export default {
 <style scoped lang="sass">
 h1
   letter-spacing: 7px;
+img
+  padding-bottom: 20px
 h3
   margin: 40px 0 0;
 ul
@@ -130,6 +143,8 @@ a
   color: #42b983
 .el-row
   display: inline-block
+.top
+  margin-top: 20px
 .items
   width: 80%
   margin: 5px
