@@ -41,7 +41,6 @@
             <el-row class="el-row">
               <el-button
                 type="text"
-                plain=plain
                 size="mini"
                 icon="el-icon-edit"
                 circle></el-button>
@@ -51,17 +50,26 @@
                 @click="remove(index)"
                 size="mini"
                 type="text"
-                plain=plain
                 icon="el-icon-delete"
                 circle>
               </el-button>
-               
-              <el-button
+
+              <div v-if="list[index].star" class="star-btn"> 
+                <el-button
+                @click="toColor(index)"
                 type="text"
-                plain=plain
+                size="mini"
+                icon="el-icon-star-on"
+                circle></el-button>
+              </div>
+              <div v-else class="star-btn">
+                <el-button
+                @click="toColor(index)"
+                type="text"
                 size="mini"
                 icon="el-icon-star-off"
                 circle></el-button>
+              </div>
             </el-row>
 
           </div>
@@ -90,15 +98,18 @@ export default {
       list: [
         {
           id: 1,
-          task: "HOGE"
+          task: "HOGE",
+          star: false
         },
         {
           id: 2,
-          task: "fuga"
+          task: "fuga",
+          star: false
         },
         {
           id: 3,
-          task: "foo"
+          task: "foo",
+          star: false
         }
       ],
       newTask: ""
@@ -109,7 +120,7 @@ export default {
       if (this.newTask === "") return alert("値を入力してください");
       let newList = [
         ...this.list,
-        { id: this.list.length + 1, task: this.newTask }
+        { id: this.list.length + 1, task: this.newTask, star: false }
       ];
       this.list = newList;
     },
@@ -121,6 +132,11 @@ export default {
     scrollTop: function() {
       const scroll = new smoothScroll();
       scroll.animateScroll(0);
+    },
+    toColor: function(index) {
+      this.list[index].star = !this.list[index].star;
+
+      console.log(this.list[index].star);
     }
   }
 };
