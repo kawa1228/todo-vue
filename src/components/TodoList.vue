@@ -125,6 +125,9 @@ export default {
       this.list = newList;
     },
     remove: function(index) {
+      const doremove = window.confirm(`${this.list[index].task}を削除します`);
+      if (!doremove) return;
+
       let newList = [...this.list];
       newList.splice(index, 1);
       this.list = newList;
