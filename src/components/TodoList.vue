@@ -153,15 +153,28 @@ export default {
         this.addtaskBlankFlag = false;
       }
 
+      let maxid = 0;
+      this.list.forEach(i => {
+        if (maxid < i.id) maxid = i.id;
+      });
+
       let newList = [
         ...this.list,
         {
-          id: this.list.length + 1,
+          id: maxid + 1,
           task: this.newTask,
           edit: false,
           star: false
         }
       ];
+
+      let doAdd = true;
+      this.list.forEach(i => {
+        if (i.task === this.newTask) {
+          doAdd = window.confirm("同じタスクです。追加しますか？");
+        }
+      });
+      if (!doAdd) return;
       this.list = newList;
     },
     remove: function(index) {
