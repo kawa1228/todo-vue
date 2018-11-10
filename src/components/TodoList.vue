@@ -11,7 +11,6 @@
           <el-form-item label="task by">
             <el-input
               v-model="newTask"
-              @keyup.13="add"
               placeholder="here"
             >
             </el-input>
@@ -40,7 +39,7 @@
 
             <el-row class="el-row">
               <el-button
-                @click="dialogFormVisible = true"
+                @click="editFlagChange(index)"
                 type="text"
                 size="mini"
                 icon="el-icon-edit"
@@ -76,18 +75,20 @@
           </div>
         </draggable>
         </div>
-      <!-- dialog -->
+
         <el-dialog title="Edit task" :visible.sync="dialogFormVisible">
-          <el-form :model="form">
-            <el-form-item label="name" :label-width="formLabelWidth">
-              <el-input v-model="form.name" autocomplete="off"></el-input>
-            </el-form-item>
-          </el-form>
-          <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogFormVisible = false">Cancel</el-button>
-            <el-button type="primary" @click="dialogFormVisible = false">Confirm</el-button>
-          </span>
-        </el-dialog>
+         <el-form :model="form">
+           <el-form-item>
+             <el-input
+             v-model="form.name"
+             placeholder="task name"
+             ></el-input>
+           </el-form-item>
+         </el-form>
+           <el-button @click="dialogFormVisible = false">Cancel</el-button>
+           <el-button type="primary" @click="editTask">Confirm</el-button>
+       </el-dialog>
+
       <!-- scroll -->
       <el-button plain class="top" @click="scrollTop" icon="el-icon-arrow-up">Top</el-button>
       
@@ -113,16 +114,19 @@ export default {
         {
           id: 1,
           task: "HOGE",
+          edit: false,
           star: false
         },
         {
           id: 2,
           task: "fuga",
+          edit: false,
           star: false
         },
         {
           id: 3,
           task: "foo",
+          edit: false,
           star: false
         }
       ],
@@ -130,16 +134,21 @@ export default {
       dialogFormVisible: false,
       form: {
         name: ""
-      },
-      formLabelWidth: "120px"
+      }
     };
   },
+  computed: {},
   methods: {
     add: function() {
       if (this.newTask === "") return alert("値を入力してください");
       let newList = [
         ...this.list,
-        { id: this.list.length + 1, task: this.newTask, star: false }
+        {
+          id: this.list.length + 1,
+          task: this.newTask,
+          edit: false,
+          star: false
+        }
       ];
       this.list = newList;
     },
@@ -159,6 +168,18 @@ export default {
       this.list[index].star = !this.list[index].star;
 
       console.log(this.list[index].star);
+    },
+    editFlagChange: function(index) {
+      this.dialogFormVisible = true;
+
+      this.list[index].edit = true;
+    },
+    editTask: function() {
+      this.list.forEach(v => {
+        if (v.edit) v.task = this.form.name;
+      });
+
+      this.dialogFormVisible = false;
     }
   }
 };
