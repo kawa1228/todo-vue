@@ -7,6 +7,7 @@
         <el-form
           :inline="true"
           class="demo-form-inline"
+          onsubmit="return false"
         >
           <el-form-item label="task by">
             <el-input
@@ -77,7 +78,7 @@
         </div>
 
         <el-dialog title="Edit task" :visible.sync="dialogFormVisible">
-         <el-form :model="form">
+         <el-form :model="form" onsubmit="return false">
            <el-form-item>
              <el-input
              v-model="form.name"
@@ -176,7 +177,10 @@ export default {
     },
     editTask: function() {
       this.list.forEach(v => {
-        if (v.edit) v.task = this.form.name;
+        if (v.edit) {
+          v.task = this.form.name;
+          v.edit = false;
+        }
       });
 
       this.dialogFormVisible = false;
