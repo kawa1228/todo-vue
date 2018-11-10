@@ -9,10 +9,12 @@
           class="demo-form-inline"
           onsubmit="return false"
         >
+          <label v-show="addtaskBlankFlag" class="label-warning">※値を入力してください</label><br>
           <el-form-item label="task by">
             <el-input
               v-model="newTask"
               placeholder="here"
+              @keyup.enter.native="add"
             >
             </el-input>
           </el-form-item>
@@ -80,9 +82,11 @@
         <el-dialog title="Edit task" :visible.sync="dialogFormVisible">
          <el-form :model="form" onsubmit="return false">
            <el-form-item>
+             <label v-show="editBlankFlag" class="label-warning">※値を入力してください</label>
              <el-input
              v-model="form.name"
              placeholder="task name"
+             @keyup.enter.native="editTask"
              ></el-input>
            </el-form-item>
          </el-form>
@@ -135,13 +139,20 @@ export default {
       dialogFormVisible: false,
       form: {
         name: ""
-      }
+      },
+      addtaskBlankFlag: false,
+      editBlankFlag: false
     };
   },
   computed: {},
   methods: {
     add: function() {
-      if (this.newTask === "") return alert("値を入力してください");
+      if (this.newTask === "") {
+        return (this.addtaskBlankFlag = true);
+      } else {
+        this.addtaskBlankFlag = false;
+      }
+
       let newList = [
         ...this.list,
         {
@@ -174,6 +185,8 @@ export default {
       this.list[index].edit = true;
     },
     editTask: function() {
+      if (this.form.name === "") return (this.editBlankFlag = true);
+
       this.list.forEach(v => {
         if (v.edit) {
           v.task = this.form.name;
