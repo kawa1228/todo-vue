@@ -57,7 +57,7 @@
 
               <div v-if="list[index].star" class="star-btn"> 
                 <el-button
-                @click="toColor(index)"
+                @click="changeStar(index)"
                 type="text"
                 size="mini"
                 icon="el-icon-star-on"
@@ -65,7 +65,7 @@
               </div>
               <div v-else class="star-btn">
                 <el-button
-                @click="toColor(index)"
+                @click="changeStar(index)"
                 type="text"
                 size="mini"
                 icon="el-icon-star-off"
@@ -165,10 +165,8 @@ export default {
       const scroll = new smoothScroll();
       scroll.animateScroll(0);
     },
-    toColor: function(index) {
+    changeStar: function(index) {
       this.list[index].star = !this.list[index].star;
-
-      console.log(this.list[index].star);
     },
     editFlagChange: function(index) {
       this.dialogFormVisible = true;
