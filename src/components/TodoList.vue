@@ -9,6 +9,7 @@
           class="demo-form-inline"
           onsubmit="return false"
         >
+          <!-- <label v-show="validation/*addtaskBlankFlag*/" class="label-warning">※値を入力してください</label><br> -->
           <label v-show="addtaskBlankFlag" class="label-warning">※値を入力してください</label><br>
           <el-form-item label="task by">
             <el-input
@@ -33,6 +34,10 @@
 
         </el-form>
 
+        <el-row class="priority">
+          <el-button @click="sortPriority" type="warning" size="mini" plain><i class="el-icon-sort"></i>　sort</el-button>
+        </el-row>
+      
         <div class="drag">
         <draggable :list="list" class="dragArea">
           <div class="items" v-for="(item, index) in list" v-bind:key="item.id" style>
@@ -144,7 +149,11 @@ export default {
       editBlankFlag: false
     };
   },
-  computed: {},
+  // computed: {
+  //   validation: function() {
+  //     return !this.newTask;
+  //   }
+  // },
   methods: {
     add: function() {
       if (this.newTask === "") {
@@ -206,8 +215,16 @@ export default {
           v.edit = false;
         }
       });
-
       this.dialogFormVisible = false;
+    },
+    sortPriority: function() {
+      let trueList = [];
+      let falseList = [];
+      this.list.forEach(i => {
+        i.star ? trueList.push(i) : falseList.push(i);
+      });
+      let newList = trueList.concat(falseList);
+      this.list = newList;
     }
   }
 };
