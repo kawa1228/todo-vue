@@ -41,7 +41,9 @@
         <div class="drag">
         <draggable :list="list" class="dragArea">
           <div class="items" v-for="(item, index) in list" v-bind:key="item.id" style>
-            <div class="item-name">
+            <div class="item-name"
+            v-bind:class="{ checkd: list[index].check }"
+            >
             {{ item.task }}
             </div>
 
@@ -78,6 +80,14 @@
                 icon="el-icon-star-off"
                 circle></el-button>
               </div>
+
+              <el-button
+                @click="doCheck(index)"
+                class="check-btn"
+                type="text"
+                size="mini"
+                icon="el-icon-circle-check-outline"
+                cicle></el-button>
             </el-row>
 
           </div>
@@ -125,19 +135,22 @@ export default {
           id: 1,
           task: "HOGE",
           edit: false,
-          star: false
+          star: false,
+          check: false
         },
         {
           id: 2,
           task: "fuga",
           edit: false,
-          star: false
+          star: false,
+          check: false
         },
         {
           id: 3,
           task: "foo",
           edit: false,
-          star: false
+          star: false,
+          check: false
         }
       ],
       newTask: "",
@@ -173,7 +186,8 @@ export default {
           id: maxid + 1,
           task: this.newTask,
           edit: false,
-          star: false
+          star: false,
+          check: false
         }
       ];
 
@@ -218,13 +232,16 @@ export default {
       this.dialogFormVisible = false;
     },
     sortPriority: function() {
-      let trueList = [];
-      let falseList = [];
+      let onList = [];
+      let offList = [];
       this.list.forEach(i => {
-        i.star ? trueList.push(i) : falseList.push(i);
+        i.star ? onList.push(i) : offList.push(i);
       });
-      let newList = trueList.concat(falseList);
+      let newList = onList.concat(offList);
       this.list = newList;
+    },
+    doCheck: function(index) {
+      this.list[index].check = !this.list[index].check;
     }
   }
 };
